@@ -41,7 +41,7 @@ build: ## Build with timoni with ns+name provided as arg/flag
 
 e2e: ## Run full flow + ep validate
 	@$(MAKE) apply
-	@tests/validate.sh
+	@test/validate.sh
 	@$(MAKE) delete
 
 apply: ## Apply the module with default values
