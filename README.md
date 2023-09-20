@@ -1,45 +1,6 @@
 # cue-kube-deploy
 
-<!--- description -->
 
-## Install
-
-To create an instance using the default values:
-
-```shell
-timoni -n default apply cue-kube-deploy oci://<container-registry-url>
-```
-
-To change the [default configuration](#configuration),
-create one or more `values.cue` files and apply them to the instance.
-
-For example, create a file `my-values.cue` with the following content:
-
-```cue
-values: {
-	resources: requests: {
-		cpu:    "100m"
-		memory: "128Mi"
-	}
-}
-```
-
-And apply the values with:
-
-```shell
-timoni -n default apply cue-kube-deploy oci://ghcr.io/<container-registry-url> \
---values ./my-values.cue
-```
-
-## Uninstall
-
-To uninstall an instance and delete all its Kubernetes resources:
-
-```shell
-timoni -n default delete cue-kube-deploy
-```
-
-## Configuration
 
 ### General values
 
@@ -47,7 +8,7 @@ timoni -n default delete cue-kube-deploy
 |------------------------------|-----------------------------------------|----------------------------|----------------------------------------------------------------------------------------------------------------------------------------------|
 | `image: tag:`                | `string`                                | `<latest version>`         | Container image tag                                                                                                                          |
 | `image: digest:`             | `string`                                | `<latest digest>`          | Container image digest, takes precedence over `tag` when specified                                                                           |
-| `image: repository:`         | `string`                                | `cgr.dev/chainguard/nginx` | Container image repository                                                                                                                   |
+| `image: repository:`         | `string`                                | `nginx` | Container image repository                                                                                                                   |
 | `image: pullPolicy:`         | `string`                                | `IfNotPresent`             | [Kubernetes image pull policy](https://kubernetes.io/docs/concepts/containers/images/#image-pull-policy)                                     |
 | `metadata: labels:`          | `{[ string]: string}`                   | `{}`                       | Common labels for all resources                                                                                                              |
 | `metadata: annotations:`     | `{[ string]: string}`                   | `{}`                       | Common annotations for all resources                                                                                                         |
@@ -81,4 +42,3 @@ values: {
 	}
 }
 ```
-# cue-kube-deploy

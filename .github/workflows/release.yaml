@@ -1,0 +1,36 @@
+name: Release Deploy module
+on:
+  push:
+    tags: ['*']
+
+permissions:
+  contents: read # needed for checkout
+  packages: write # needed for GHCR access
+
+jobs:
+  push:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Setup CUE
+        uses: cue-lang/setup-cue@v1.0.0-alpha.2
+        with:
+          version: v0.5.0
+      - name: Setup Timoni
+        uses: stefanprodan/timoni/actions/setup@main
+        with:
+          version: 0.11.1
+      - name: Test instance build
+        id: test
+        run: make test
+      - name: Push
+        id: push
+        env:
+          USER: ${{ github.actor }}
+          PASS: ${{ secrets.GITHUB_TOKEN }}
+          OWNER: ${{ github.repository_owner }}
+          TAG: ${{ github.ref_name }}
+        run: make push
