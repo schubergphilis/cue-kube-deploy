@@ -23,9 +23,6 @@ jobs:
         uses: stefanprodan/timoni/actions/setup@main
         with:
           version: 0.14.0
-      - name: Test instance build
-        id: test
-        run: make test
       - name: Push
         id: push
         env:
@@ -34,3 +31,6 @@ jobs:
           OWNER: ${{ github.repository_owner }}
           TAG: ${{ github.ref_name }}
         run: make push
+      - name: Test bundle
+        id: test
+        run: make bundleup
