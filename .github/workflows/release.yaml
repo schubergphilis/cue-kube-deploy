@@ -31,6 +31,9 @@ jobs:
           OWNER: ${{ github.repository_owner }}
           TAG: ${{ github.ref_name }}
         run: make push
+      - name: Spinup kind
+        id: kind
+        run: make kind
       - name: Test bundle
         id: test
         run: make bundleup
