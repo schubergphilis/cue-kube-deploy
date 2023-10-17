@@ -6,7 +6,7 @@ DEFAULT=help
 
 MODULE=deploy
 
-.PHONY: help test build push tools
+.PHONY: help test build push tools fmt
 
 help: ## Display this help
 	@awk 'BEGIN {FS = ":.*##"; printf "\nUsage:\n  make \033[36m<target>\033[0m\n"} /^[a-zA-Z_0-9-]+:.*?##/ { printf "  \033[36m%-15s\033[0m %s\n", $$1, $$2 } /^##@/ { printf "\n\033[1m%s\033[0m\n", substr($$0, 5) } ' $(MAKEFILE_LIST)
@@ -21,6 +21,7 @@ get: ## Update Kubernetes API CUE definitions
 	@cue get go k8s.io/api/core/v1
 	@cue get go k8s.io/api/apps/v1
 	@cue get go  k8s.io/api/rbac/v1
+	@cue get go k8s.io/api/networking/v1
 	@cue get go k8s.io/apimachinery/pkg/apis/meta/v1
 	@cue get go k8s.io/apimachinery/pkg/runtime
 	@cue get go k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1
@@ -41,6 +42,10 @@ kind: ## Create kind cluster
 build: ## Build with timoni with ns+name provided as arg/flag
 	@timoni build -n testing test . 
 
+
+fmt: ## Format cue files
+	@cue fmt .
+	@cue fmt ./templates
 
 e2e: ## Run full flow + ep validate
 	@$(MAKE) apply

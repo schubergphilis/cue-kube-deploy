@@ -31,8 +31,8 @@ import (
 				serviceAccountName: _config.metadata.name
 				containers: [
 					{
-						name:  _config.metadata.name
-						image: "\(_config.image.repository):\(_config.image.tag)"
+						name:            _config.metadata.name
+						image:           "\(_config.image.repository):\(_config.image.tag)"
 						imagePullPolicy: _config.imagePullPolicy
 						ports: [
 							if _config.ports != _|_ {
@@ -68,7 +68,7 @@ import (
 						for container in _config.sidecarContainers {
 							container
 						}
-					}
+					},
 				]
 				if _config.volumes != _|_ {
 					volumes: _config.Volumes

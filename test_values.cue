@@ -20,10 +20,11 @@ values: {
 			port: "http"
 		}
 	}
-	// sidecarContainers: [
-	// 	{
-	// 		name:  "main"
-	// 		image: "cgr.dev/chainguard/nginx:1.25.1"
-	// 	},
-	// ]
+	ingress: {
+		create: true
+		http: [{
+			path: "/test"
+			port: 80
+		}]
+	}
 }

@@ -30,7 +30,7 @@ import (
 
 	// Containers
 	// main
-	image:          timoniv1.#Image
+	image:           timoniv1.#Image
 	imagePullPolicy: *"IfNotPresent" | string
 	livenessProbe?:  corev1.#Probe
 	readinessProbe?: corev1.#Probe
@@ -44,12 +44,21 @@ import (
 
 	// Service
 	service: {
-		port: *80 | int & >0 & <=65535
+		port:     *80 | int & >0 & <=65535
 		protocol: *"TCP" | string
 	}
 
-	configMap: {
+	ingress: {
 		create: *false | bool
+		host:   *"" | string
+		http: [{
+			path: *"/" | string
+			port: *80 | int & >0 & <=65535
+		}]
+	}
+
+	configMap: {
+		create:    *false | bool
 		immutable: *true | bool
 		// data: *{} 
 	}
@@ -62,8 +71,13 @@ import (
 	objects: {
 		sa:  #ServiceAccount & {_config: config}
 		svc: #Service & {_config:        config}
+
+		if config.ingress.create {
+			ing: #Ingress & {_config: config}
+		}
+
 		if config.configMap.create {
-			cm:  #ConfigMap & {_config:      config}
+			cm: #ConfigMap & {_config: config}
 		}
 		deploy: #Deployment & {
 			_config: config
