@@ -42,10 +42,10 @@ kind: ## Create kind cluster
 build: ## Build with timoni with ns+name provided as arg/flag
 	@timoni build -n testing test . 
 
-
 fmt: ## Format cue files
 	@cue fmt .
 	@cue fmt ./templates
+	@timoni mod lint ./ 
 
 e2e: ## Run full flow + ep validate
 	@$(MAKE) apply
@@ -54,7 +54,7 @@ e2e: ## Run full flow + ep validate
 
 apply: ## Apply the module with default values
 	@kubectl create ns test
-	@timoni apply -n test test-deploy ./ --timeout=1m
+	@timoni apply -n test test-deploy -f test_values.cue ./ --timeout=1m
 
 delete: ## Delete the module with default values
 	@timoni delete -n test test-deploy ./ --timeout=1m
