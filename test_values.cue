@@ -19,6 +19,4 @@ values: {
 		name:  "test"
 		value: "TEST"
 	}]
-	command: ["echo"]
-	containerArgs: ["test"]
 }
