@@ -27,8 +27,8 @@ get: ## Update Kubernetes API CUE definitions
 	@cue get go k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1
 	@rm go.mod go.sum
 
-test: ## Build with test_tool.cue + test_values.cue
-	@cue cmd -t test -t name=test -t namespace=test -t mv=0.0.1 -t kv=1.28.0 build .
+test: ## Build with test_values.cue
+	@timoni build -n testing test -f test_values.cue .
 	
 bundleup: ## Deploy using demo bundle
 	@timoni bundle apply -f bundle_test.cue
