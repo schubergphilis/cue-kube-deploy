@@ -38,6 +38,9 @@ import (
 	ports?: [...corev1.#ContainerPort]
 	resources?:       corev1.#ResourceRequirements
 	securityContext?: corev1.#SecurityContext
+	environmentVars?: [...corev1.#EnvVar]
+	command?: [...string]
+	containerArgs?: [...string]
 
 	// additional
 	sidecarContainers?: [...corev1.#Container]
@@ -52,8 +55,9 @@ import (
 		create: *false | bool
 		host:   *"" | string
 		http: [{
-			path: *"/" | string
-			port: *80 | int & >0 & <=65535
+			pathType: *"Prefix" | string
+			path:     *"/" | string
+			port:     *80 | int & >0 & <=65535
 		}]
 	}
 

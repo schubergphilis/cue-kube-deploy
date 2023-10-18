@@ -27,4 +27,10 @@ values: {
 			port: 80
 		}]
 	}
+	environmentVars: [{
+		name:  "test"
+		value: "TEST"
+	}]
+	command: ["echo"]
+	containerArgs: ["test"]
 }

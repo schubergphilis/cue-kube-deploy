@@ -24,7 +24,8 @@ import (
 			http: {
 				paths: [
 					for setup in _config.ingress.http {
-						path: setup.path
+						path:     setup.path
+						pathType: setup.pathType
 						backend: {
 							service: {
 								name: _config.metadata.name

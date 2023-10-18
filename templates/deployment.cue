@@ -31,9 +31,19 @@ import (
 				serviceAccountName: _config.metadata.name
 				containers: [
 					{
-						name:            _config.metadata.name
-						image:           "\(_config.image.repository):\(_config.image.tag)"
+						name:  _config.metadata.name
+						image: "\(_config.image.repository):\(_config.image.tag)"
+						if _config.command != _|_ {command: _config.command}
+						if _config.containerArgs != _|_ {args: _config.containerArgs}
 						imagePullPolicy: _config.imagePullPolicy
+						if _config.environmentVars != _|_ {
+							env: [
+								for var in _config.environmentVars {
+									name:  var.name
+									value: var.value
+								},
+							]
+						}
 						ports: [
 							if _config.ports != _|_ {
 								for port in _config.ports {
